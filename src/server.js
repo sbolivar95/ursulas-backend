@@ -41,6 +41,31 @@ app.get('/db-health', async (req, res) => {
   }
 })
 
+app.get('/debug/db', async (req, res) => {
+  try {
+    const dbInfo = await pool.query(`
+      SELECT current_database(), current_schema(), current_user;
+    `)
+
+    const searchPath = await pool.query(`SHOW search_path;`)
+
+    const usersTable = await pool.query(`
+      SELECT table_schema, table_name
+      FROM information_schema.tables
+      WHERE table_name = 'users';
+    `)
+
+    res.json({
+      dbInfo: dbInfo.rows[0],
+      searchPath: searchPath.rows[0],
+      usersTable: usersTable.rows,
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: String(err) })
+  }
+})
+
 // Routes
 app.use('/auth', authRouter)
 app.use('/items', itemsRouter)
