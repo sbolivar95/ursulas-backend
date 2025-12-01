@@ -12,7 +12,7 @@ const app = express()
 
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://<your-vercel-app>.vercel.app', // 👈 replace with your real domain
+  'https://shefa-lechem.vercel.app/', // 👈 replace with your real domain
 ]
 
 app.use(
