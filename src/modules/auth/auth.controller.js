@@ -142,7 +142,7 @@ export async function login(req, res, next) {
         fullName: user.full_name,
         roles: [membership.role],
       },
-      activeOrgId: { id: membership.org_id },
+      organization: { id: membership.org_id },
       role: membership.role,
     })
   } catch (err) {
