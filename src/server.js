@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import { config } from './config/env.js'
+import { pool } from './db/pool.js'
 
 // Routers
 import { authRouter } from './modules/auth/auth.routes.js'
@@ -24,8 +25,20 @@ app.use(
 app.use(express.json())
 
 // Health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok' })
+app.get('/db-health', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()')
+    res.json({
+      ok: true,
+      time: result.rows[0].now,
+    })
+  } catch (err) {
+    console.error('DB health error:', err)
+    res.status(500).json({
+      ok: false,
+      error: err.message,
+    })
+  }
 })
 
 // Routes
