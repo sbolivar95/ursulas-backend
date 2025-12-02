@@ -67,7 +67,7 @@ export async function listEmployees(req, res, next) {
       [orgId]
     )
 
-    return res.status(200).json({ rows })
+    return res.status(200).json(rows)
   } catch (err) {
     next(err)
   } finally {
