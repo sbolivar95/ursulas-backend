@@ -8,6 +8,7 @@ import { authRouter } from './modules/auth/auth.routes.js'
 import { itemsRouter } from './modules/items/items.routes.js'
 import { productsRouter } from './modules/products/products.routes.js'
 import { recipesRouter } from './modules/recipes/recipes.routes.js'
+import { employeesRouter } from './modules/employees/employees.routes.js'
 
 const app = express()
 
@@ -71,6 +72,7 @@ app.use('/auth', authRouter)
 app.use('/items', itemsRouter)
 app.use('/products', productsRouter)
 app.use('/recipes', recipesRouter)
+app.use('/employees', employeesRouter)
 
 // 404
 app.use((req, res) => {

@@ -17,7 +17,7 @@ export async function registerOwner(req, res, next) {
 
     if (!email || !password || !fullName || !organizationName) {
       return res.status(400).json({
-        message: 'email, password, full name, organizationName are required',
+        message: 'email, password, full name, organization name are required',
       })
     }
 
