@@ -19,7 +19,7 @@ export async function createEmployee(req, res, next) {
     await client.query('BEGIN')
 
     const hashed = await bcrypt.hash(password_hash, config.bcryptRounds)
-    const user = await client.query(
+    const userResult = await client.query(
       `
         INSERT INTO users (email, password_hash, full_name)
         VALUES ($1, $2, $3)
@@ -27,6 +27,8 @@ export async function createEmployee(req, res, next) {
       `,
       [email, hashed, full_name]
     )
+
+    const user = userResult.rows[0]
 
     await client.query(
       `
