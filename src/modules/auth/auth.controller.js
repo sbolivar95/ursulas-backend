@@ -209,7 +209,7 @@ export async function me(req, res, next) {
         email: user.email,
         fullName: user.full_name,
       },
-      activeOrgId: org,
+      organization: org,
       role,
     })
   } catch (err) {
