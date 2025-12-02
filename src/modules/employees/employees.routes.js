@@ -16,7 +16,7 @@ import {
 export const employeesRouter = Router()
 
 employeesRouter.get(
-  '/:orgId/employees/return_list',
+  '/:orgId/return_list',
   authenticate,
   requireOrgMatchFromParam('orgId'),
   requireRole('OWNER', 'MANAGER'),
@@ -24,7 +24,7 @@ employeesRouter.get(
 )
 
 employeesRouter.get(
-  '/:orgId/employees/:memberId/return_single_employee',
+  '/:orgId/:memberId/return_single_employee',
   authenticate,
   requireOrgMatchFromParam('orgId'),
   requireRole('OWNER', 'MANAGER'),
@@ -32,7 +32,7 @@ employeesRouter.get(
 )
 
 employeesRouter.post(
-  '/:orgId/employees/create',
+  '/:orgId/create',
   authenticate,
   requireOrgMatchFromParam('orgId'),
   requireRole('OWNER', 'MANAGER'),
@@ -40,7 +40,7 @@ employeesRouter.post(
 )
 
 employeesRouter.patch(
-  '/:orgId/employees/:memberId/update_employee',
+  '/:orgId/:memberId/update_employee',
   authenticate,
   requireOrgMatchFromParam('orgId'),
   requireRole('OWNER', 'MANAGER'),
@@ -48,7 +48,7 @@ employeesRouter.patch(
 )
 
 employeesRouter.delete(
-  '/:orgId/employees/:memberId/delete_employee',
+  '/:orgId/:memberId/delete_employee',
   authenticate,
   requireOrgMatchFromParam('orgId'),
   requireRole('OWNER', 'MANAGER'),

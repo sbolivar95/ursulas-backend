@@ -1,4 +1,4 @@
-import { pool } from '../../db/pool'
+import { pool } from '../../db/pool.js'
 
 export async function createEmployee(req, res, next) {
   const client = await pool.connect()
