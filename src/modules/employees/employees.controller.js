@@ -57,7 +57,7 @@ export async function listEmployees(req, res, next) {
       return res.status(400).json({ message: 'Organization is required' })
     }
 
-    const membersResult = await client.query(
+    const { rows } = await client.query(
       `
         SELECT om.id, u.email, u.full_name, om.role
         FROM organization_members om
@@ -67,7 +67,7 @@ export async function listEmployees(req, res, next) {
       [orgId]
     )
 
-    return res.status(200).json({ members: membersResult.rows })
+    return res.status(200).json({ rows })
   } catch (err) {
     next(err)
   } finally {
