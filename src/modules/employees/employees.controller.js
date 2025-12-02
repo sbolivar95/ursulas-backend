@@ -1,15 +1,16 @@
 import { pool } from '../../db/pool.js'
+import bcrypt from 'bcryptjs'
+import { config } from '../../config/env.js'
 
 export async function createEmployee(req, res, next) {
   const client = await pool.connect()
 
   try {
     const orgId = req.params.orgId
-    const userCode = req.params.userCode
 
     const { email, password_hash, full_name, role } = req.body
 
-    if (!orgId || !userCode) {
+    if (!orgId) {
       return res
         .status(400)
         .json({ message: 'Organization and User is required' })
@@ -18,7 +19,7 @@ export async function createEmployee(req, res, next) {
     await client.query('BEGIN')
 
     const hashed = await bcrypt.hash(password_hash, config.bcryptRounds)
-    await client.query(
+    const user = await client.query(
       `
         INSERT INTO users (email, password_hash, full_name)
         VALUES ($1, $2, $3)
@@ -33,7 +34,7 @@ export async function createEmployee(req, res, next) {
         VALUES ($1, $2, $3)
         RETURNING id, role;
       `,
-      [user.id, org.id, role]
+      [user.id, orgId, role]
     )
 
     await client.query('COMMIT')
